@@ -1,10 +1,7 @@
 package com.project.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,4 +17,5 @@ public class Category extends BaseEntity {
     private String categoryName;
     private String categoryDescription;
     private String icon;
+    private String path;
 }

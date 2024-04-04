@@ -1,7 +1,6 @@
 package com.project.product.controller;
 
 import com.project.product.dto.ProductDto;
-import com.project.product.entity.Product;
 import com.project.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryId(
+            @RequestParam(defaultValue = "0", required = false) Long categoryId
+    ) {
+        List<ProductDto> products = productService.getProductsByCategoryId(categoryId);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductDto product) {
-        Product createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDto[] productDto) {
+        productService.createProduct(productDto);
+        return new ResponseEntity<>("Create product successfully", HttpStatus.CREATED);
     }
-
 }

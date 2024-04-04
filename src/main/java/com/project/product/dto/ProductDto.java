@@ -1,6 +1,9 @@
 package com.project.product.dto;
 
+import com.project.product.payload.request.AttributeNameAndValue;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -10,4 +13,5 @@ public class ProductDto {
     private Double regularPrice;
     private Integer stockQuantity;
     private Double productWeight;
+    private List<AttributeNameAndValue> listAttributes;
 }

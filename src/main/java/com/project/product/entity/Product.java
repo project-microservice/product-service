@@ -22,6 +22,7 @@ public class Product extends BaseEntity {
     private Double regularPrice;
     private Integer stockQuantity;
     private Double productWeight;
+
     @JsonIgnore
     @OneToMany(
             mappedBy = "productAttributeId.productId",

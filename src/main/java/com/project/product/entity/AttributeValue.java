@@ -1,5 +1,6 @@
 package com.project.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ public class AttributeValue extends BaseEntity {
     private Long id;
 
     private String attributeValue;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "attribute_id", nullable = false)
     private Attribute attribute;

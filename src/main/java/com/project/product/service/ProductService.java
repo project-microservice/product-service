@@ -6,7 +6,7 @@ import com.project.product.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAllProducts();
-    Product createProduct(ProductDto product);
-
+    List<ProductDto> getAllProducts();
+    void createProduct(ProductDto[] productDto);
+    List<ProductDto> getProductsByCategoryId(Long categoryId);
 }

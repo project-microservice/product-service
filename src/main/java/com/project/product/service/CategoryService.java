@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CategoryService {
     void createCategory(CategoryDto[] categoryDto);
-    List<Category> getAllCategories();
+    List<CategoryDto> getAllCategories();
 }

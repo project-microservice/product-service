@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductCategoryController {
     private final ProductCategoryService productCategoryService;
-
     @PostMapping
-    public ResponseEntity<String> getAllProducts(@RequestBody ProductCategoryDto productCategoryDto) {
+    public ResponseEntity<String> addProductToCategory(@RequestBody ProductCategoryDto[] productCategoryDto) {
         String result = productCategoryService.addProductToCategory(productCategoryDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+
 }

@@ -8,4 +8,5 @@ public class CategoryDto {
     private String categoryName;
     private String categoryDescription;
     private String icon;
+    private String path;
 }
