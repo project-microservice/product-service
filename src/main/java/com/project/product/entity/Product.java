@@ -1,10 +1,7 @@
 package com.project.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,18 +17,6 @@ public class Product extends BaseEntity {
     @Column(unique = true)
     private String productName;
     private Double regularPrice;
-    private Integer stockQuantity;
+//    private Integer stockQuantity;
     private Double productWeight;
-
-    @JsonIgnore
-    @OneToMany(
-            mappedBy = "productAttributeId.productId",
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH
-            })
-    private Set<ProductAttribute> listAttributes;
 }

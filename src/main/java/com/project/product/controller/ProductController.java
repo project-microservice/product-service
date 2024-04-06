@@ -1,6 +1,8 @@
 package com.project.product.controller;
 
-import com.project.product.dto.ProductDto;
+import com.project.product.payload.request.ProductRequest;
+import com.project.product.payload.response.ProductDetailResponse;
+import com.project.product.payload.response.ProductResponse;
 import com.project.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +17,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getProductsByCategoryId(
+    public ResponseEntity<List<ProductResponse>> getProductsByCategoryId(
             @RequestParam(defaultValue = "0", required = false) Long categoryId
     ) {
-        List<ProductDto> products = productService.getProductsByCategoryId(categoryId);
+        List<ProductResponse> products = productService.getProductsByCategoryId(categoryId);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDetailResponse> getProductDetail(@PathVariable Long id) {
+        ProductDetailResponse productDetailResponse = productService.getProductDetail(id);
+        return null;
+    }
+
     @PostMapping
-    public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDto[] productDto) {
-        productService.createProduct(productDto);
+    public ResponseEntity<String> createProduct(@Valid @RequestBody ProductRequest[] listProducts) {
+        productService.createProducts(listProducts);
         return new ResponseEntity<>("Create product successfully", HttpStatus.CREATED);
     }
 }

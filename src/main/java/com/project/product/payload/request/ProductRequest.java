@@ -1,17 +1,16 @@
-package com.project.product.dto;
+package com.project.product.payload.request;
 
-import com.project.product.payload.request.AttributeNameAndValue;
 import lombok.Data;
 
 import java.util.List;
-
 @Data
-public class ProductDto {
+public class ProductRequest {
     private Long id;
     private String type;
     private String productName;
     private Double regularPrice;
     private Integer stockQuantity;
     private Double productWeight;
-    private List<AttributeNameAndValue> listAttributes;
+    private List<AttributeNameAndValueRequest> listAttributes;
+    private List<ProductGalleryRequest> listImages;
 }

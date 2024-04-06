@@ -14,8 +14,8 @@ public class AttributeValue extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String attributeValue;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "attribute_id", nullable = false)

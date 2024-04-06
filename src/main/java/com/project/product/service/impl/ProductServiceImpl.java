@@ -1,13 +1,13 @@
 package com.project.product.service.impl;
 
-import com.project.product.dto.ProductDto;
-import com.project.product.entity.Attribute;
 import com.project.product.entity.Product;
+import com.project.product.payload.request.ProductRequest;
+import com.project.product.payload.response.ProductDetailResponse;
+import com.project.product.payload.response.ProductResponse;
 import com.project.product.repository.CategoryRepository;
 import com.project.product.repository.ProductRepository;
 import com.project.product.service.AttributeService;
-import com.project.product.service.AttributeValueService;
-import com.project.product.service.ProductAttributeService;
+import com.project.product.service.ProductGalleryService;
 import com.project.product.service.ProductService;
 import com.project.product.utils.CheckAvailability;
 import lombok.RequiredArgsConstructor;
@@ -24,40 +24,41 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final AttributeService attributeService;
-    private final AttributeValueService attributeValueService;
-    private final ProductAttributeService productAttributeService;
+    private final ProductGalleryService productGalleryService;
 
     @Override
-    public List<ProductDto> getAllProducts() {
+    public List<ProductResponse> getAllProducts() {
         return productRepository.findAll().stream().map(element -> {
-            ProductDto productDto = new ProductDto();
-            BeanUtils.copyProperties(element, productDto);
-            return productDto;
+            ProductResponse productResponse = new ProductResponse();
+            BeanUtils.copyProperties(element, productResponse);
+            return productResponse;
         }).collect(Collectors.toList());
     }
 
     @Override
-    public void createProduct(ProductDto[] productDto) {
-        Arrays.stream(productDto).forEach(element -> {
+    public void createProducts(ProductRequest[] listProducts) {
+        Arrays.stream(listProducts).forEach(element -> {
             Product product = new Product();
             BeanUtils.copyProperties(element, product);
             Product savedProduct = productRepository.save(product);
-            element.getListAttributes().forEach(_attribute -> {
-                Attribute savedAttribute = attributeService.createAttribute(_attribute.getAttributeName());
-                attributeValueService.createAttributeValue(_attribute.getAttributeValue(), savedAttribute);
-                productAttributeService.createProductAttribute(savedProduct.getId(), savedAttribute.getId());
-            });
+            attributeService.createAttribute(element.getListAttributes(), savedProduct);
+            productGalleryService.createProductGallery(savedProduct, element.getListImages());
         });
     }
 
     @Override
-    public List<ProductDto> getProductsByCategoryId(Long categoryId) {
+    public List<ProductResponse> getProductsByCategoryId(Long categoryId) {
         if (categoryId == 0) return getAllProducts();
         CheckAvailability.checkOptionalEntity(categoryRepository, categoryId, "Category", "id");
         return productRepository.getListProductByCategoryId(categoryId).stream().map(element -> {
-            ProductDto productDto = new ProductDto();
-            BeanUtils.copyProperties(element, productDto);
-            return productDto;
+            ProductResponse productResponse = new ProductResponse();
+            BeanUtils.copyProperties(element, productResponse);
+            return productResponse;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDetailResponse getProductDetail(Long productId) {
+        return null;
     }
 }

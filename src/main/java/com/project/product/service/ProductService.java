@@ -1,12 +1,14 @@
 package com.project.product.service;
 
-import com.project.product.dto.ProductDto;
-import com.project.product.entity.Product;
+import com.project.product.payload.request.ProductRequest;
+import com.project.product.payload.response.ProductDetailResponse;
+import com.project.product.payload.response.ProductResponse;
 
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDto> getAllProducts();
-    void createProduct(ProductDto[] productDto);
-    List<ProductDto> getProductsByCategoryId(Long categoryId);
+    List<ProductResponse> getAllProducts();
+    void createProducts(ProductRequest[] listProducts);
+    List<ProductResponse> getProductsByCategoryId(Long categoryId);
+    ProductDetailResponse getProductDetail(Long productId);
 }
